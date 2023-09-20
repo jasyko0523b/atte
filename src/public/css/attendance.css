@@ -1,0 +1,73 @@
+body {
+    background-color: #f2f2f2;
+}
+
+/* 全体中央寄せ */
+.summary {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.date-select {
+    display: flex;
+    margin: 20px auto;
+    justify-content: center;
+}
+
+.date-select__item {
+    display: inline-block;
+    margin: auto 20px;
+}
+
+.date-select a{
+    text-decoration: none;
+    padding: 0px 10px;
+    color: #2384CF;
+    border: 1px #2384CF solid;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+.summary__table {
+    margin: auto;
+    width: 90%;
+}
+
+.summary__table--header,
+.summary__table--item{
+    border-top: 1px #909090 solid;
+    padding: 10px auto;
+    height: 10vh;
+}
+
+
+
+.pagination {
+    margin: 10px auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.page-item {
+    display: table-cell;
+    padding: 10px;
+    width: 50px;
+    background-color: #fff;
+    border: 1px solid #E3E6E9;
+    border-radius: 3px;
+}
+
+.page-link {
+    color: #2384CF;
+    text-decoration: none;
+}
+
+.page-item.active {
+    background: #2384CF;
+    color: #fff;
+    pointer-events: none;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+}

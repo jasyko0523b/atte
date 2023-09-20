@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Form</title>
+    <title>Atte</title>
     <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/common.css') }}" />
     @yield('css')
@@ -18,11 +18,18 @@
                 Atte
             </a>
             <nav>
+                @auth
                 <ul>
-                    <li class="nav__item"><a href="">ホーム</a></li>
-                    <li class="nav__item"><a href="">日付一覧</a></li>
-                    <li class="nav__item"><a href="">ログアウト</a></li>
+                    <li class="nav__item"><a href="/">ホーム</a></li>
+                    <li class="nav__item"><a href="/attendance">日付一覧</a></li>
+                    <li class="nav__item">
+                        <form class="logout-form" action="/logout" method="post">
+                            @csrf
+                            <button class="logout-form__button">ログアウト</button>
+                        </form>
+                    </li>
                 </ul>
+                @endauth
             </nav>
         </div>
     </header>

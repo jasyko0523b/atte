@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/signin.css') }}">
+<link rel="stylesheet" href="{{ asset('css/register.css') }}">
 @endsection
 
 @section('content')
 <div class="signin__content">
-    <form class="signin-form" action="/confirm" method="post">
+    <form class="signin-form" action="/register" method="post">
         @csrf
         <h2 class="signin-form__tytle">会員登録</h2>
         <div class="signin-form__item">
@@ -26,7 +26,7 @@
             </p>
         </div>
         <div class="signin-form__item">
-            <input class="signin-form__item--input" type="text" name="password"  placeholder="パスワード" value="{{ old('password') }}"/>
+            <input class="signin-form__item--input" type="password" name="password"  placeholder="パスワード" value="{{ old('password') }}"/>
             <p class="signin-form__item--error">
                 @if( $errors->has('password') )
                     {{$errors->first('password')}}
@@ -34,7 +34,7 @@
             </p>
         </div>
         <div class="signin-form__item">
-            <input class="signin-form__item--input" type="text" name="password_check"  placeholder="確認用パスワード" value="{{ old('password_check') }}"/>
+            <input class="signin-form__item--input" type="password" name="password_confirmation"  placeholder="確認用パスワード" value="{{ old('password_confirmation') }}"/>
             <p class="signin-form__item--error">
                 @if( $errors->has('password_check') )
                     {{$errors->first('password_check')}}

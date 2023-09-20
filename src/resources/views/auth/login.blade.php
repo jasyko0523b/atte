@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="login__content">
-    <form class="login-form" action="/confirm" method="post">
+    <form class="login-form" action="/login" method="post">
         @csrf
         <h2 class="login-form__tytle">ログイン</h2>
         <div class="login-form__item">
@@ -18,7 +18,7 @@
             </p>
         </div>
         <div class="login-form__item">
-            <input class="login-form__item--input" type="text" name="password"  placeholder="パスワード" value="{{ old('password') }}"/>
+            <input class="login-form__item--input" type="password" name="password"  placeholder="パスワード" value="{{ old('password') }}"/>
             <p class="login-form__item--error">
                 @if( $errors->has('password') )
                     {{$errors->first('password')}}
@@ -31,7 +31,7 @@
         </form>
         <div class="signin">
             <p class="signin__message">アカウントをお持ちでない方はこちらから</p>
-            <a class="signin__link" href="/signin">会員登録</a>
+            <a class="signin__link" href="/register">会員登録</a>
         </div>
 </div>
 @endsection
