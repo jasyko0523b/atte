@@ -6,8 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TimekeeperController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\UsersController;
-
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,24 +19,19 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
 Route::middleware('auth')->group(function () {
     Route::get('/', [TimekeeperController::class, 'index']);
+
+    Route::get('/email/verify', [EmailVerificationController::class, 'index'])->name('verification.notice');
+
+    Route::middleware('signed')->group(function (){
+        Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verification'])->name('verification.verify');
+    });
+
+    Route::middleware('throttle:6,1')->group(function (){
+        Route::post('/email/verification-notification', [EmailVerificationController::class, 'notification'])->name('verification.send');
+    });
+
     Route::middleware('verified')->group(function (){
         Route::post('/', [TimekeeperController::class, 'store']);
         Route::get('/attendance/{date?}',[AttendanceController::class, 'attendance']);
