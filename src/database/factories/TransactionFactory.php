@@ -12,38 +12,77 @@ class TransactionFactory extends Factory
      * @return array
      */
 
-    private static int $user_id = 1;
-    private static int $type = 0;
-    private static $date = '2023-09-20';
+    private static $user_id = 0;
+    private static $type = 0;
+    private static $date = '2023-09-01';
+    private static $flag = true;
+    private static $days_count = 1;
+    private static $time = '2023-09-01 00:00:00';
+    private static $break = '+10';
 
     public function definition()
     {
-        self::changeUser();
+        self::changeType();
+        self::getTime();
         return [
             'user_id' => self::$user_id,
-            'type' => self::$type++,
-            'time' => self::getTime()
+            'type' => self::$type,
+            'time' => self::$time
         ];
     }
 
-    private function changeUser(){
-        if(self::$type == 4){
-            self::$user_id = random_int(1,100);
-            self::$type = 0;
-            self::$date = $this->faker->dateTimeBetween('-1 week')->format('Y-m-d');
+    private function changeType(){
+        if(self::$flag){
+            self::$user_id++;
+            if(self::$user_id == 101){
+                self::$user_id = 1;
+                self::$date = date('Y-m-d', strtotime(self::$date .'+1day'));
+                self::$days_count++;
+                if(self::$days_count == 29){
+                    self::$type++;
+                    self:: $date = '2023-09-01';
+                    self::$days_count = 1;
+                    if(self::$type == 2){
+                        self::$flag = false;
+                        self::setBreak();
+                    }
+                }
+            }
+        }else{
+            self::$type++;
+            self::setBreak();
+        }
+    }
+
+    private function setBreak(){
+        switch(self::$type){
+            case 2:
+            case 4:
+                self::$user_id = random_int(1,100);
+                self::$date = $this->faker->dateTimeBetween('-26 day')->format('Y-m-d');
+                self::$type = 2;
+                break;
+            case 3:
+                break;
         }
     }
 
     private function getTime(){
         switch(self::$type){
+            case 0:
+                self::$time = date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('08:00:00', '10:00:00')->format('H:i:s')));
+                break;
             case 1:
-                return date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('08:00:00', '10:00:00')->format('H:i:s')));
+                self::$time = date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('18:00:00', '22:00:00')->format('H:i:s')));
+                break;
             case 2:
-                return date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('18:00:00', '22:00:00')->format('H:i:s')));
+                self::$time = date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('11:00:00', '16:00:00')->format('H:i:s')));
+                break;
             case 3:
-                return date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('11:00:00', '14:00:00')->format('H:i:s')));
-            case 4:
-                return date('Y-m-d H:i:s',strtotime(self::$date.' '.$this->faker->dateTimeBetween('15:00:00', '17:00:00')->format('H:i:s')));
+                self::$break = '+ '.strval(random_int(5,60)).'minute';
+                self::$time = date('H:i:s', strtotime(self::$time.self::$break));
+                self::$time = date('Y-m-d H:i:s',strtotime(self::$date.' '.self::$time));
+                break;
         }
     }
 

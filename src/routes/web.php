@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TimekeeperController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\UsersController;
+
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +19,31 @@ use App\Http\Controllers\TimekeeperController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [TimekeeperController::class, 'index']);
-    Route::post('/', [TimekeeperController::class, 'store']);
-    Route::get('/attendance/{date?}',[TimekeeperController::class, 'attendance']);
+    Route::middleware('verified')->group(function (){
+        Route::post('/', [TimekeeperController::class, 'store']);
+        Route::get('/attendance/{date?}',[AttendanceController::class, 'attendance']);
+        Route::get('/users',[UsersController::class, 'users']);
+        Route::get('/schedule/{user_id?}',[UsersController::class, 'schedule']);
+    });
 });
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');

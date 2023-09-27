@@ -1,0 +1,83 @@
+body {
+    background-color: #f2f2f2;
+}
+
+/* 全体中央寄せ */
+.schedule {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.user-select {
+    display: flex;
+    margin: 20px auto;
+    justify-content: center;
+}
+
+.user-select__item {
+    display: inline-block;
+    margin: auto 20px;
+}
+
+.user-select a {
+    text-decoration: none;
+    padding: 0px 10px;
+    color: #2384CF;
+    border: 1px #2384CF solid;
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+.schedule__table {
+    margin: 20px auto;
+    width: 90%;
+}
+
+.schedule__table--item{
+    border-top: 1px #909090 solid;
+    padding: 10px auto;
+    height: 6vh;
+    &.small{
+        width: 15vw;
+    }
+}
+
+.graph {
+    width: 100%;
+    height: 7vh;
+}
+
+#graph-info {
+    width: 100%;
+    height: 2vh;
+}
+
+.pagination {
+    margin: 0 auto 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.page-item {
+    display: table-cell;
+    padding: 10px;
+    width: 50px;
+    background-color: #fff;
+    border: 1px solid #E3E6E9;
+    border-radius: 3px;
+}
+
+.page-link {
+    color: #2384CF;
+    text-decoration: none;
+}
+
+.page-item.active {
+    background: #2384CF;
+    color: #fff;
+    pointer-events: none;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+}

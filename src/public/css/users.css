@@ -1,0 +1,59 @@
+body {
+    background-color: #f2f2f2;
+}
+
+/* 全体中央寄せ */
+.users {
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.users__table {
+    margin: 20px auto;
+    width: 90%;
+}
+
+.users__table--item{
+    border-top: 1px #909090 solid;
+    padding: 10px auto;
+    height: 6vh;
+}
+
+.schedule-link{
+    padding: 5px;
+    color: #fff;
+    background-color: #2384CF;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+.pagination {
+    margin: 20px auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.page-item {
+    display: table-cell;
+    padding: 10px;
+    width: 50px;
+    background-color: #fff;
+    border: 1px solid #E3E6E9;
+    border-radius: 3px;
+}
+
+.page-link {
+    color: #2384CF;
+    text-decoration: none;
+}
+
+.page-item.active {
+    background: #2384CF;
+    color: #fff;
+    pointer-events: none;
+}
+
+.page-item.active .page-link {
+    color: #fff;
+}

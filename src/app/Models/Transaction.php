@@ -34,4 +34,10 @@ class Transaction extends Model
             $query->latest()->where('user_id', $user_id)->first();
         }
     }
+
+    public function scopeGetSummary($query, $user_id){
+        if(!empty($user_id)){
+            $query->where('user_id', $user_id);
+        }
+    }
 }
